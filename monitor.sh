@@ -1,7 +1,8 @@
 #!/bin/bash
 echo "Monitor Docker Events"
 
-source ./.monitor.ini
+DIR=$( dirname "$0" )
+source "${DIR}/.monitor.ini"
 
 domain=$MONITOR_DOMAIN
 from=$MONITOR_FROM
@@ -19,9 +20,7 @@ function sendMail(){
         #log=$(docker logs --tail 50 ${container_name})
         docker logs --tail 50 ${container_name} &> "${timestamp}.log"
 
-        req="curl --user 'api:${api_key}' '$URL' -F from='${from}' -F to='${to}'" + \
-                "  -F subject='Container started ${container_name} on ${server_name}' "+ \
-                "  -F text='${log}' -F attachment='@${timestamp}.log' "
+        req="curl --user 'api:${api_key}' '$URL' -F from='${from}' -F to='${to}' -F subject='Container started ${container_name} on ${server_name}' -F text='${log}' -F attachment='@${timestamp}.log' "
 
         #echo "${req}"
         eval $req
