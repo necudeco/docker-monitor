@@ -30,6 +30,7 @@ function sendMail(){
 
 docker events --filter 'type=container' --filter 'event=start' --format '{{.Actor.Attributes.name}}' |
 while read container; do
-      echo " container started ${line}" ;
+      NOW="$(date)"
+      echo " container ${container} started at ${NOW} " ;
       sendMail $container
 done
