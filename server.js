@@ -13,7 +13,7 @@ let cmd = _cmd.shift();
 
 // Crea un servidor HTTP
 const server = http.createServer((req, res) => {
-    console.log("Request received", req.url );
+    console.log("Request received", req.url, req.socket.remoteAddress, req.socket.localAddress);
 
     if ( hash == "" ){
         res.statusCode = 403;
